@@ -4,8 +4,8 @@ import wt from "worker_threads";
 const nthFibonacci = (n) => (n < 2 ? n : nthFibonacci(n - 1) + nthFibonacci(n - 2));
 
 const sendResult = () => {
-  const elementNumber = wt.workerData.elementNumber;
-  wt.parentPort.postMessage({ elementNumber: elementNumber, value: nthFibonacci(elementNumber) });
+  if (Math.random() > 0.6) throw new Error();
+  wt.parentPort.postMessage(nthFibonacci(wt.workerData.elementNumber));
 };
 
 sendResult();

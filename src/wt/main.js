@@ -21,17 +21,20 @@ const performCalculations = async () => {
         worker.on("error", (err) => {
           rej(err);
         });
-
-        worker.on("exit", (code) => {
-          if (code !== 0) {
-            rej(code);
-          }
-          res();
-        });
       })
     );
   }
-  (await Promise.all(promises)).forEach((e) => console.log(`${e.elementNumber}: ${e.value}`));
+  (await Promise.allSettled(promises)).forEach((e) => {
+    let status, val;
+    if (e.status === "fulfilled") {
+      status = "resolved";
+      val = e.value;
+    } else {
+      status = "error";
+      val = null;
+    }
+    console.log(`${status}: ${val}`);
+  });
 };
 
 await performCalculations();
