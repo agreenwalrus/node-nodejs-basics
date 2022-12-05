@@ -1,15 +1,15 @@
 import fs from "node:fs/promises";
 import path from "path";
-import { isExisting } from "../utilite.js";
+import { errorHandler } from "../utilite.js";
 
 const create = async () => {
-  const filePath = path.resolve(process.cwd(), "./src/fs/files/fresh.txt");
-  const data = "I am fresh and young";
-
-  if (await isExisting(filePath)) {
-    throw new Error("FS operation failed");
+  try {
+    const filePath = path.resolve(process.cwd(), "./src/fs/files/fresh.txt");
+    const data = "I am fresh and young";
+    await fs.writeFile(filePath, data, { flag: "wx" });
+  } catch (err) {
+    errorHandler(err);
   }
-  await fs.appendFile(filePath, data);
 };
 
 await create();

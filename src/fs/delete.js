@@ -1,14 +1,14 @@
 import fs from "node:fs/promises";
 import path from "path";
-import { isExisting } from "../utilite.js";
+import { errorHandler } from "../utilite.js";
 
 const remove = async () => {
-  const pathFile = path.resolve(process.cwd(), "./src/fs/files/fileToRemove.txt");
-
-  if (!(await isExisting(pathFile))) {
-    throw new Error("FS operation failed");
+  try {
+    const pathFile = path.resolve(process.cwd(), "./src/fs/files/fileToRemove.txt");
+    await fs.unlink(pathFile);
+  } catch (err) {
+    errorHandler(err);
   }
-  await fs.unlink(pathFile);
 };
 
 await remove();

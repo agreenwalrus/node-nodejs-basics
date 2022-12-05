@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "path";
-import { errorHandler, isExisting } from "../utilite.js";
+import { errorHandler } from "../utilite.js";
 
 const copyDirectoryDeep = async (srcPath, destPath) => {
   const files = await fs.readdir(srcPath, { withFileTypes: true });

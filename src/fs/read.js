@@ -1,14 +1,14 @@
 import fs from "node:fs/promises";
 import path from "path";
-import { isExisting } from "../utilite.js";
+import { errorHandler } from "../utilite.js";
 
 const read = async () => {
-  const pathFile = path.resolve(process.cwd(), "./src/fs/files/fileToRead.txt");
-
-  if (!(await isExisting(pathFile))) {
-    throw new Error("FS operation failed");
+  try {
+    const pathFile = path.resolve(process.cwd(), "./src/fs/files/fileToRead.txt");
+    console.log(await fs.readFile(pathFile, { encoding: "utf8" }));
+  } catch (err) {
+    errorHandler(err);
   }
-  console.log(await fs.readFile(pathFile, { encoding: "utf8" }));
 };
 
 await read();
