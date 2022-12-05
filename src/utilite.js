@@ -6,5 +6,12 @@ export async function isExisting(path) {
       throw err;
     }
   });
-  return stat !== undefined
+  return stat !== undefined;
+}
+
+export function errorHandler(err) {
+  if (err.code === "ENOENT" || err.code === "EEXIST") {
+    throw new Error("FS operation failed");
+  }
+  throw err;
 }
